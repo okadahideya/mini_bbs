@@ -2,14 +2,15 @@
 session_start();
 require('dbconnect.php');
 
-if($_COOKIE['email'] !== ''){
+if(isset($_COOKIE['email']) === ''){
   $email = $_COOKIE['email'];
 }
+
 
 if(!empty($_POST)) 
   $email = $_POST['email'];  //ログインのアドレスを最新にする
 
-  if($_POST['email'] !== '' && $_POST['password'] !== ''){         //データが入力されているか
+  if(isset($_POST['email']) && $_POST['password'] !== ''){         //データが入力されているか
     $login = $db->prepare('SELECT * FROM members WHERE email=? AND password=?');
     $login->execute(array(
       $_POST['email'],
@@ -33,6 +34,7 @@ if(!empty($_POST))
   }else{
     $error['login'] = 'blank';
   }
+
 
 ?>
 
